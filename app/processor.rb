@@ -1,3 +1,6 @@
+
+# generates an array of records with the required fields
+
 class Processor
     attr_accessor :results, :date_parser, :format
     def initialize(results:, format:)
