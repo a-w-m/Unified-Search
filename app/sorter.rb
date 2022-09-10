@@ -5,8 +5,8 @@ class Sorter
 
     attr_accessor :aggregate_results
 
-    def initialize(aggregate_results)
-        @aggregate_results = aggregate_results
+    def initialize(aggregator:)
+        @aggregate_results = aggregator.results
     end
 
     def filter_records_without_date

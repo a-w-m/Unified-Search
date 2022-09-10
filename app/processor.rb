@@ -3,8 +3,8 @@
 
 class Processor
     attr_accessor :results, :date_parser, :format
-    def initialize(results:, format:)
-        @results = results
+    def initialize(search:, format:)
+        @results = search.results
         @format = format
         @date_parser = Regexp.new('[0-9]{3,4}')
     end
@@ -43,10 +43,20 @@ class Processor
         record.dig(*format[:date_path])
     end
     
-    def parse_date(date)
-        if date_parser.match?(*date)
-            date_parser.match(*date)[0]
+    def parse_date(date) 
+        
+        unless date.nil?
+            
+            if date.is_a? Array
+                date = date.first
+            end 
+
+            if date_parser.match?(date)
+                date_parser.match(date)[0]
+            end
         end
+
+       
     end
         
     def link (record)
