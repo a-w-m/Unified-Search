@@ -15,6 +15,14 @@ class Processor
 
     private 
 
+    # retrieve the values from the record using array of keys in each field of the format hash
+
+    # challenge: currently returing the value from the original record which results 
+    # in inconsistent data types/classes, i.e. title is an Array in colenda, but a string in finding aids
+
+    # challenge: Processor losing single responsibility by both digging the response for values and processing the results
+    # there is an opportunity to create a new class that solely responds to messages requesting to dig  
+
     def records
         results.dig(*format[:records_path])
     end 
@@ -42,6 +50,14 @@ class Processor
     end
         
     def link (record)
+
+        # challenge: lose abstraction here handling a field (link) not in the Colenda response 
+
+        if format[:source] == "Colenda"
+            link = "https://colenda.library.upenn.edu/catalog/#{record["id"]}"
+            return link      
+        end
+
         link = record.dig(*format[:link_path])
         link = link || format[:link_path]
     end
